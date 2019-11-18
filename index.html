@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sun Viewer</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
+  </head>
+  <body onresize="updateDisplay()">
+    <div id="content">
+      <h2>Sun Viewer</h2>
+      <canvas id="canvas" width="900" height="500"></canvas>
+      <table id="controls">
+	<tr>
+	  <td colspan="2">
+	    <span class="header">Current Position</span>
+	    Altitude: <span id="alt"></span>
+	    <span class="break"></span>
+	    Azimuth: <span id="az"></span>
+	  </td>
+	</tr>
+	<tr>
+	  <td colspan="2">
+	    <span class="header">Window Center Azimuth</span>
+	    <input id="view-az" type="range" min="0" max="24" value="12" oninput="viewSlider(this.value)"></input>
+	    <span id="view-az-display" class="header">180&#176; (S)</span>
+	    <input id="grid" type="checkbox" onclick="toggleGrid(this.checked)">Show altazimuth grid</input>
+	  </td>
+	</tr>
+	<tr>
+	  <td>
+	    <span class="header">Location</span>
+	    Latitude: <input id="lat" class="wide" type="text" value="0" oninput="updateLat(this.value)" onchange="fillElements()"></input>&#176;
+	    <br/>
+	    Longitude: <input id="lon" class="wide" type="text" value="0" oninput="updateLon(this.value)" onchange="fillElements()"></input>&#176;
+	    <br/>
+	    <button onclick="currentLocation()">Set to current location</button>
+	    <br/>
+	    <span id="loc-message"></span>
+	  </td>
+	  <td>
+	    <span class="header">Date and Time</span>
+	    <span class="control-unit">
+	      Year: <input id="year" type="text" value="2019" oninput="updateYear(this.value)" onchange="fillElements()"></input>
+	      <button onclick="incrementYear()">+</button>
+	      <button onclick="decrementYear()">-</button>
+	    </span>
+	    <span class="break"></span>
+	    <span class="control-unit">
+	      Month: <input id="month" class="narrow" type="text" value="1" oninput="updateMonth(this.value)" onchange="fillElements()"></input>
+	      <button onclick="incrementMonth()">+</button>
+	      <button onclick="decrementMonth()">-</button>
+	    </span>
+	    <span class="break"></span>
+	    <span class="control-unit">
+	      Day: <input id="day" class="narrow" type="text" value="1" oninput="updateDay(this.value)" onchange="fillElements()"></input>
+	      <button onclick="incrementDay()">+</button>
+	      <button onclick="decrementDay()">-</button>
+	    </span>
+	    <br/>
+	    Time (24-hour clock):
+	    <span class="control-unit">
+	      <input id="hours" class="narrow" type="text" value="00" oninput="updateHours(this.value)" onchange="fillElements()"></input>
+	      : <input id="minutes" class="narrow" type="text" value="00" oninput="updateMinutes(this.value)" onchange="fillElements()"></input>
+	      : <input id="seconds" class="narrow" type="text" value="00" oninput="updateSeconds(this.value)" onchange="fillElements()"></input>
+	    </span>
+	    <br/>
+	    <input id="time-slider" type="range" min="0" max="86399" value="0" oninput="timeSlider(this.value)"></input>
+	    <br/>
+	    UTC offset (hours): <input id="utc-offset" type="text" value="0" oninput="updateOffset(this.value)" onchange="fillElements()"></input>
+	    <br/>
+	    <button onclick="currentDatetime()">Set to current date and time</button>
+	  </td>
+	</tr>
+	<tr>
+	  <td colspan="2">
+	    <span class="header">Animation</span>
+	    <button onclick="decreaseSpeed()">&lt;</button>
+	    <button id="animate" onclick="toggleAnimation()">Play</button>
+	    <button onclick="increaseSpeed()">&gt;</button>
+	    <br/>
+	    Speed: <span id="animation-speed">1</span>x
+	  </td>
+	</tr>
+      </table>
+    </div>
+    <script src="utils.js"></script>
+    <script src="draw.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
